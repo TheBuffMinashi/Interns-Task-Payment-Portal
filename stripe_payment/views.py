@@ -43,4 +43,11 @@ class NewCustomer(APIView):
     
 
     
+class SetupIntent(APIView):
 
+    permission_classes = (IsAuthenticated,)
+
+    context:Dict[str,Any]
+
+    def post(self,request):
+        ...

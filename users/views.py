@@ -21,13 +21,9 @@ class LoginUser(APIView):
             data=request.data, context={'request': request}
         )
         if serializer.is_valid(raise_exception=True):
-            user = authenticate(
-                email=serializer.validated_data['email'],
-                password=serializer.validated_data['password'],
-            )
-            if user is not None:
+            user = User.objects.get(email=serializer.validated_data['email'])
+            if user.check_password(serializer.validated_data['password']):
                 message = {
-                    'user': UserSerializer(user).data,
                     'tokens': get_tokens_for_user(user),
                 }
                 return Response(message, status=status.HTTP_200_OK)

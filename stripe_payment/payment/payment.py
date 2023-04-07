@@ -127,3 +127,40 @@ class SetupIntent:
             describtion = self.__describtion
         )
 
+class PaymentIntent:
+
+    def __init__(self,**information:Optional[Dict[str,Any]]) -> None:
+        
+        self.__describtion:str = information["describtion"]
+        self.__customer:str = information["customer"]
+        self.__amount = information["amount"]
+
+        self.__currency:str = "pln"
+        self.__payment_method_types:List[str] = ["card"]
+        self.__capture_method:str = "manual"
+
+
+
+
+    def new_pay(self,another_user:str) -> bool:
+        try:
+            payment_method = Customer().retrieve(self.__customer).default_source
+
+            payment_intent = stripe.PaymentIntent.create(
+                amount = self.__amount,
+                currency = self.__currency,
+                payment_method_types = self.__payment_method_types,
+                capture_method = self.__capture_method,
+                customer = self.__customer,
+                transfer_data = {"destination" : another_user},
+                describtion = self.__describtion,
+                payment_method = payment_method,
+            )
+
+            payment_intent_confrim = stripe.PaymentIntent.confirm(
+                payment_intent.stripe_id,payment_method = payment_method
+            )
+
+            return True
+        except:
+            return False

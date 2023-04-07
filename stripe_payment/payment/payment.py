@@ -1,4 +1,4 @@
-from typing import Any,Dict
+from typing import Any,Dict,List
 
 import stripe
 
@@ -87,3 +87,34 @@ class FileAttach:
         }
 
         stripe.Account.modify(self.__stripe_account,individual = individual)
+
+class SetupIntent:
+
+    def __init__(self,**information) -> None:
+        
+        self.__payment_method_types:List[Any] = information["payment_method_types"]
+        self.__customer = information["customer"]
+        self.__describtion:str = information["describtion"]
+        
+
+    @property
+    def payment_method_types(self) -> List[Any]:
+        return self.__payment_method_types
+
+    @property
+    def customer(self):
+        return self.__customer
+    
+    @property
+    def describtion(self) -> str:
+        return self.__describtion
+    
+    def new_setup(self):
+
+        stripe.SetupIntent.create(
+            payment_method_types = self.__payment_method_types,
+            customer = self.__customer,
+            describtion = self.__describtion
+        )
+
+    

@@ -22,3 +22,17 @@ class Customer(models.Model):
     
     class Meta:
         verbose_name_plural = "Customers"
+
+
+class SetupIntent(models.Model):
+
+    from_customer = models.ForeignKey(Customer,on_delete=models.CASCADE,verbose_name="From Customer",related_name="from_customers_setupintent")
+    to_customer = models.ForeignKey(Customer,on_delete=models.CASCADE,verbose_name="To Customer",related_name="to_customers_setupintent")
+
+    desc = models.TextField(verbose_name="Describtion")
+
+    def __str__(self) -> str:
+        return self.from_customer.name + " " + self.to_customer.name
+    
+    class Meta:
+        verbose_name_plural = "SetupIntent"

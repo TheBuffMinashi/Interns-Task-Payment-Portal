@@ -33,3 +33,5 @@ class NewCustomer(APIView):
             return Response(self.context,status=status.HTTP_200_OK)
         
         return Response(customer_serializer.error_messages,status=status.HTTP_400_BAD_REQUEST)
+    
+    

@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .serializer import CustomerSerializer
-from .models import Customer
+from .payment.payment import Customer,PaymentIntent,SetupIntent
 
 
 class NewCustomer(APIView):
@@ -26,6 +26,13 @@ class NewCustomer(APIView):
 
             customer_serializer.save()
 
+            Customer(
+                name = customer_serializer.validated_data.get("name"),
+                describtion = customer_serializer.validated_data.get("describtion"),
+                email = customer_serializer.validated_data.get("email"),
+                phone = customer_serializer.validated_data.get("phone"),
+            ).create_new()
+
             self.context = {
                 "message" : "Customer Added Successfully ..."
             }
@@ -34,4 +41,6 @@ class NewCustomer(APIView):
         
         return Response(customer_serializer.error_messages,status=status.HTTP_400_BAD_REQUEST)
     
+
     
+

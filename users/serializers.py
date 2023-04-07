@@ -13,12 +13,12 @@ class RegisterUserSerializer(serializers.Serializer):
     full_name = serializers.CharField()
     password = serializers.CharField(write_only=True)
 
-    def validate(self, attrs):
-        if User.objects.filter(email=attrs['email']).exists():
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
             raise serializers.ValidationError(
-                {'email', 'This email has already been selected'}
+                'This email has already been selected'
             )
-        return attrs
+        return value
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -34,9 +34,7 @@ class LoginUserSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
 
-    def validate(self, attrs):
-        if not User.objects.filter(email=attrs['email']).exists():
-            raise serializers.ValidationError(
-                {'email', 'The email is not exists'}
-            )
-        return attrs
+    def validate_email(self, value):
+        if not User.objects.filter(email=value).exists():
+            raise serializers.ValidationError('The email is not exists')
+        return value

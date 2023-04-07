@@ -28,3 +28,15 @@ class RegisterUserSerializer(serializers.Serializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+class LoginUserSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        if not User.objects.filter(email=attrs['email']).exists():
+            raise serializers.ValidationError(
+                {'email', 'The email is not exists'}
+            )
+        return attrs

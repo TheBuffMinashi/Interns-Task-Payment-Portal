@@ -1,4 +1,4 @@
-from typing import Any,Dict,List
+from typing import Any,Dict,List,Optional
 
 import stripe
 
@@ -12,7 +12,7 @@ class StripeManager:
 
 class Customer:
 
-    def __init__(self,**information) -> None:
+    def __init__(self,**information:Optional[Dict[str,Any]]) -> None:
         
         self.__email:str = information["email"]
         self.__describtion:str = information["describtion"]
@@ -43,6 +43,10 @@ class Customer:
             name = self.__name,
             phone = self.__phone
         )
+
+    def retrieve(self,user_id:str) -> stripe.Customer:
+
+        return stripe.Customer.retrieve(user_id)
 
 
 class FileAttach:
@@ -88,6 +92,12 @@ class FileAttach:
 
         stripe.Account.modify(self.__stripe_account,individual = individual)
 
+    def new_source(self,user_id:str,token:str) -> Any:
+
+        new_card_source:Any = stripe.Customer.create_source(user_id,source = token)
+
+        return new_card_source
+
 class SetupIntent:
 
     def __init__(self,**information) -> None:
@@ -117,4 +127,3 @@ class SetupIntent:
             describtion = self.__describtion
         )
 
-    

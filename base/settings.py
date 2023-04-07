@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "rest_framework",
+    "rest_framework.authtoken",
+    "stripe_payment.apps.StripePaymentConfig",
+    "account.apps.AccountConfig",
 ]
 
 MIDDLEWARE = [

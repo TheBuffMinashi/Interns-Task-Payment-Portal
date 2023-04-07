@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import StripeInformation
+
+
+class StripeInformationAdmin(admin.ModelAdmin):
+    ...
+
+admin.site.register(StripeInformation,StripeInformationAdmin)

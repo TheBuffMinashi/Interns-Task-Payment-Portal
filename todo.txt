@@ -1,0 +1,8 @@
+Task: 
+ - Payment, Product endpoints
+ - stripe session
+ - tests
+ - mysql db
+ - docs
+ - Dockerizing Project
+ - redis and celery for users

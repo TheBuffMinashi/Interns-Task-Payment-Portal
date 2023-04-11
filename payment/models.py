@@ -10,6 +10,8 @@ class Payment(models.Model):
 
     status = models.CharField(choices=PaymentStatus.choices, default=PaymentStatus.PENDING, max_length=31)
     payment_id = models.CharField(max_length=127, null=True)
-    amount = models.DecimalField(decimal_places=2, max_digits=9)
+    amount = models.PositiveIntegerField()
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    currency = models.CharField(max_length=15, null=True)
+    client_secret = models.CharField(max_length=255, null=True)

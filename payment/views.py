@@ -19,13 +19,15 @@ class ConfirmPaymentAPIView(APIView):
     def post(self, request):
         data = self.request.data
         payment_id = data.get('data').get('object').get('id')
+        payment_type = data.get('type')
         try:
             payment = Payment.objects.get(payment_id=payment_id)
         except Payment.DoesNotExist:
             raise ValidationError(detail='Invalid payment id')
         else:
-            payment_type = data.get('type')
-            if payment_type == 'payment_intent.succeeded':
+            if payment_type == 'payment_intent.created':
+                payment.status = payment.PaymentStatus.CREATED
+            elif payment_type == 'payment_intent.succeeded':
                 payment.status = payment.PaymentStatus.DONE
             elif payment_type == 'payment_intent.payment_failed':
                 payment.status = payment.PaymentStatus.FAILED

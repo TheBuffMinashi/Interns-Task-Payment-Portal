@@ -28,6 +28,6 @@ class CreatePaymentSerializer(serializers.ModelSerializer):
         else:
             payment.payment_id = payment_intent.id
             payment.client_secret = payment_intent.client_secret
-            payment.status = Payment.PaymentStatus.PENDING
+            payment.status = Payment.PaymentStatus.REQUESTED
             payment.save()
         return payment

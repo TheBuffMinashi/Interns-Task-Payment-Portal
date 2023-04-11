@@ -24,7 +24,6 @@ class CreatePaymentSerializer(serializers.ModelSerializer):
                 },
             )
         except stripe.error.StripeError as e:
-            print(e.user_message)
             raise APIException
         else:
             payment.payment_id = payment_intent.id

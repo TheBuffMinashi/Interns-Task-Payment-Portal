@@ -63,5 +63,3 @@ class LoginUser(APIView):
                 "token" : token
             }
             return Response(self.context,status=status_code)
-
-

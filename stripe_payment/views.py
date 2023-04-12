@@ -8,8 +8,10 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from .serializer import CustomerSerializer
+from .serializer import CustomerSerializer,SetupIntentSerializer
 from .payment.payment import Customer,PaymentIntent,SetupIntent
+
+
 
 
 class NewCustomer(APIView):
@@ -26,11 +28,16 @@ class NewCustomer(APIView):
 
             customer_serializer.save()
 
+            name:str = customer_serializer.validated_data.get("name")
+            describtion:str = customer_serializer.validated_data.get("describtion")
+            email:str = customer_serializer.validated_data.get("email")
+            phone:str = customer_serializer.validated_data.get("phone")
+
             Customer(
-                name = customer_serializer.validated_data.get("name"),
-                describtion = customer_serializer.validated_data.get("describtion"),
-                email = customer_serializer.validated_data.get("email"),
-                phone = customer_serializer.validated_data.get("phone"),
+                name = name,
+                describtion = describtion,
+                email = email,
+                phone = phone,
             ).create_new()
 
             self.context = {
@@ -50,4 +57,20 @@ class SetupIntent(APIView):
     context:Dict[str,Any]
 
     def post(self,request):
-        ...
+        
+        setup_intent_serializer = SetupIntentSerializer(request.data)
+
+        if setup_intent_serializer.is_valid():
+            setup_intent_serializer.save()
+
+            self.context = {
+                "message" : "SetupIntent Added Successfully ..."
+            }
+
+            return Response(
+                self.context,
+                status=status.HTTP_200_OK
+            )
+        return Response(data = setup_intent_serializer.error_messages,status=status.HTTP_400_BAD_REQUEST)
+
+

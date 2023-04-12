@@ -84,6 +84,12 @@ WSGI_APPLICATION = 'base.wsgi.application'
 #     }
 # }
 
+RESR_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES" : {
+        "rest_framework.authentication.TokenAuthentication"
+    }
+}
+
 
 DATABASES = {  
     'default': {  

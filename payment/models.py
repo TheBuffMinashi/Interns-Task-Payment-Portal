@@ -10,9 +10,9 @@ class Payment(models.Model):
         FAILED = 'Failed', _('Failed')
 
     status = models.CharField(choices=PaymentStatus.choices, default=PaymentStatus.REQUESTED, max_length=31)
-    payment_id = models.CharField(max_length=127, null=True)
-    amount = models.PositiveIntegerField()
+    payment_id = models.CharField(max_length=127, default='-')
+    amount = models.PositiveIntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-    currency = models.CharField(max_length=15, null=True)
-    client_secret = models.CharField(max_length=255, null=True)
+    currency = models.CharField(max_length=15, default='usd')
+    client_secret = models.TextField(default='-')

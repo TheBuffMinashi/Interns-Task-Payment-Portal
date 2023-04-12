@@ -8,8 +8,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from .serializer import CustomerSerializer,SetupIntentSerializer
-from .payment.payment import Customer,PaymentIntent,SetupIntent
+from .serializer import CustomerSerializer,SetupIntentSerializer,PaymentIntentSerializer
+from .payment.payment import Customer
 
 
 
@@ -74,3 +74,26 @@ class SetupIntent(APIView):
         return Response(data = setup_intent_serializer.error_messages,status=status.HTTP_400_BAD_REQUEST)
 
 
+class PaymentIntent(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    context:Dict[str,Any] = {}
+
+    def post(self,request):
+
+        payment_intent_serializer = PaymentIntentSerializer(request.data)
+
+        if payment_intent_serializer.is_valid():
+            payment_intent_serializer.save()
+
+            self.context = {
+                "message" : "Payment Added Successfully ..."
+            }
+
+            return Response(self.context,status=status.HTTP_200_OK)
+        
+        return Response(
+            data = payment_intent_serializer.error_messages
+        )
+        

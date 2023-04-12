@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-net
+    environment:
+      MYSQL_USER: payment_portal_admin
+      MYSQL_PASSWORD: payment2023
+      MYSQL_DATABASE: payment_portal
+      MYSQL_ROOT_PASSWORD: payment2023
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: sh -c "chmod +x /code/entrypoint.sh && sh /code/entrypoint.sh"
+    env_file: .env
+    volumes:
+      - .:/code
+    networks:
+      - app-net
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
+
+networks:
+  app-net:

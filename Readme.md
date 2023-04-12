@@ -14,3 +14,15 @@ To contribute to this project:
 Make sure to follow best practices for coding, testing, and documentation. Include clear and concise documentation on how to use the payment portal and its API.
 
 Happy coding!
+
+
+## For running the Project !!!
+
+1. Make sure that you have proper vpn or dns for using docker 
+2. Run `docker compose up` for running the project
+3. Then you can use the swagger provided in `http://localhost:8000` for accessing the provided API which in this case
+is creating payment
+
+
+### Notice that for customized APIs using Stripe we need front end for processing to check out please see the below link
+https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=elements

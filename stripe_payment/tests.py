@@ -27,6 +27,20 @@ class StripeSystemTestCase(TestCase):
         self._header:Dict[str,Any] = {
             "Authorization" : f"Token {self.__token_key}"
         }
+
+    def _create_test_customer(self) -> Customer:
+        customer_data:Dict[str,Any] = {
+            "email" : "test@gmail.com",
+            "describtion" : "test desc",
+            "name" : "example name",
+            "phone" : "09123456789",
+        }
+
+        customer = Customer.objects.create(
+            **customer_data
+        )
+
+        return customer
         
 
 
@@ -57,21 +71,36 @@ class SetupIntentTestCase(StripeSystemTestCase):
 
         url:str = "/setup-intent"
 
-        customer_data:Dict[str,Any] = {
-            "email" : "test@gmail.com",
-            "describtion" : "test desc",
-            "name" : "example name",
-            "phone" : "09123456789",
-        }
-
-        customer = Customer.objects.create(
-            **customer_data
-        )
+        customer = self._create_test_customer()
 
         data:Dict[str,Any] = {
             "desc" : "Test Describtion",
             "payment_method_types" : ["a","b"],
             "customer_id" : customer.id,
+        }
+
+        response = self._client.post(
+            url,data = data,**self._header
+        )
+
+        self.assertEqual(response.status_code,self._SUCCESS_CODE)
+
+
+class PaymentIntentSerializer(StripeSystemTestCase):
+
+    def test_new_payment(self):
+
+        url:str = "/payment"
+
+        customer = self._create_test_customer()
+
+        data:Dict[str,Any] = {
+            "describtion" : "Test Desc",
+            "customer" : customer.id,
+            "currency" : "pln",
+            "amount" : 1000,
+            "payment_method_types" : ["a","b"],
+            "capture_method" : "manual"
         }
 
         response = self._client.post(

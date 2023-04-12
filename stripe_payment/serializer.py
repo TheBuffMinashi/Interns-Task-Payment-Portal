@@ -55,4 +55,36 @@ class SetupIntentSerializer(serializers.Serializer):
 
         return setup_intent
 
+
+class PaymentIntentSerializer:
+
+    describtion = serializers.CharField(
+        error_messages = {
+            "required" : "Please Enter Describtion"
+        }
+    )
+
+    customer = serializers.IntegerField(
+        default = 0,
+        error_messages = {
+            "required" : "Please Enter Customer"
+        }
+    )
+
+    amount = serializers.IntegerField(
+        error_messages = {
+            "required" : "Please Enter Amount ..."
+        }
+    )
+
+    payment_method_types = serializers.ListField(
+        error_messages = {
+            "required" : "Please Enter Payment Method Types"
+        }
+    )
+
+    capture_method = serializers.CharField(
+        default = "manual"
+    )
+    
         

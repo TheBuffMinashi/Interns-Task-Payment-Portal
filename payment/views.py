@@ -31,7 +31,6 @@ class ConfirmPaymentAPIView(APIView):
                 payment.status = payment.PaymentStatus.DONE
             elif payment_type == 'payment_intent.payment_failed':
                 payment.status = payment.PaymentStatus.FAILED
-            payment.date_modified = timezone.now()
             payment.save()
             response_data = {'detail': 'event received'}
             return Response(response_data, status=status.HTTP_200_OK)

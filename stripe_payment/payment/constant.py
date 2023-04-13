@@ -1,0 +1,2 @@
+
+STRIPE_KEY:str = "pk_test_51LMv4MLgZbTUhJbx6ee9YQp0at8duzFlkT9uO482FObcDElbKg5FAlyQ5jDWmzfEmZDc6xRw0kA1mWYgClehLT5100GQlsrhd0"

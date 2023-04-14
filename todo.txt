@@ -1,0 +1,9 @@
+Task: 
+ - Payment, Product endpoints
+ - stripe session
+ - tests
+ - postgres db
+ - docs
+ - Dockerizing Project
+ - redis and celery for users
+ - media

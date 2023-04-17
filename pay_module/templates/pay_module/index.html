@@ -1,0 +1,21 @@
+{% extends 'shared/layout.html' %}
+
+{% block title %}
+    home_page
+{% endblock %}
+
+{% block body %}
+     <div class="container">
+        <div class="row">
+            <h2>Available Products</h2>
+
+            {% for product in all_products %}
+                <div class="col-lg-4">
+                    <h3><a href="{% url 'app:product_detail' product.id product.slug  %}">{{ product.name }}</a></h3>
+                    <p>Price ${{ product.price }}</p>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

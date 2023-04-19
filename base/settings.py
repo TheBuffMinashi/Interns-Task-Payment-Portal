@@ -19,6 +19,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+# Stripe configuration
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51MwpUsHQIdOmxz7tIr93shngIxXeQyTnTvNWSNTsDF7yeiWHmMZ1UzHOJZT9F55l7z25wQ8xFONLAsPL3hKaDGGY005bKy1aoH'
+STRIPE_SECRET_KEY = 'sk_test_51MwpUsHQIdOmxz7tmNoiQ0dyz6wG9xRBOeQNhhv3PNkkIk5qIVz92FLJXPxcqfF2YY6uoUXXgflaJcJZJI9LSA5M00s77BpHzW'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-+%^gvv4uh@%5gh--1mh$3q^6f3(bok45rv=yru1@nl9y8d6yn+'
 
@@ -31,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'pay',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

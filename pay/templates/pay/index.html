@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Buy cool new product</title>
+    <link rel="stylesheet" href="{% static 'pay/styles.css' %}">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{% static 'pay/main.js' %}"></script>
+  </head>
+  <body>
+    
+    <section>
+        {% if session_id %}
+        <div>{{ session_id }}</div>
+        {% endif %}
+      <div class="product">
+        <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
+        <div class="description">
+          <h3>Stubborn Attachments</h3>
+          <h5>$20.00</h5>
+        </div>
+      </div>
+      <!-- <form action="/create-checkout-session" method="POST"> -->
+      <!-- <form action="{% url 'pay' %}" method="POSt">
+        {% csrf_token %} 
+        <button type="submit" id="checkout-button">Checkout</button>
+      </form> -->
+      <button type="submit" id="checkout-button">Checkout</button>
+    </section>
+  </body>
+</html>

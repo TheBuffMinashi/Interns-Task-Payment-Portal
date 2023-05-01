@@ -4,10 +4,11 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import stripe
 
+
 # Create your views here.
 
 def index(request):
- return render(request, "pay/index.html")
+    return render(request, "pay/index.html")
 
 
 @csrf_exempt

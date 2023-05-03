@@ -10,17 +10,18 @@
   <body>
     
     <section>
-        {% if session_id %}
-        <div>{{ session_id }}</div>
+        {% if user %}
+        <div><a href ="{% url 'api:logout'  %}">logout {{user}}</a></div>
         {% endif %}
       <div class="product">
-        <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
+        <img src="https://apicms.thestar.com.my/uploads/images/2022/07/24/1670670.jpg" alt="The cover of Stubborn Attachments" />
         <div class="description">
-          <h3>Stubborn Attachments</h3>
+          <h5>Hello {{user}}</h5>
+          <h3>To make working children laugh</h3>
           <h5>$20.00</h5>
         </div>
       </div>
-      <button type="submit" id="checkout-button">Checkout</button>
+      <button type="submit" id="checkout-button">Support and payment</button>
     </section>
   </body>
 </html>

@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'pay',
     'rest_framework',
+    'djoser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,6 +76,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'base.wsgi.application'
 
+LOGIN_REDIRECT_URL= '/'
+LOGOUT_REDIRECT_URL='/'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

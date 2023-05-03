@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.http.response import JsonResponse, HttpResponse
+from django.http.response import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-
 import stripe
 
 from rest_framework.response import Response
@@ -14,11 +14,14 @@ from pay.serializers import PaymentSerializer
 
 # Create your views here.
 
+
 def index(request):
-    # return render(request, "pay/index.html")
-    return render(request, "pay/index.html",{
-            "PaymentNOK": request.user
-        })
+    if request.user.id:
+        return render(request, "pay/index.html",{
+                "user": request.user
+            })
+    else:
+        return HttpResponseRedirect(reverse('api:login'))
 
 
 @csrf_exempt

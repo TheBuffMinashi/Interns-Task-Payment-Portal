@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Buy cool new product</title>
+    <link rel="stylesheet" href="{% static 'pay/styles.css' %}">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{% static 'pay/main.js' %}"></script>
+  </head>
+  <body>
+    
+    <section>
+        {% if user %}
+        <div><a href ="{% url 'api:logout'  %}">logout {{user}}</a></div>
+        {% endif %}
+      <div class="product">
+        <img src="https://apicms.thestar.com.my/uploads/images/2022/07/24/1670670.jpg" alt="The cover of Stubborn Attachments" />
+        <div class="description">
+          <h5>Hello {{user}}</h5>
+          <h3>To make working children laugh</h3>
+          <h5>$20.00</h5>
+        </div>
+      </div>
+      <button type="submit" id="checkout-button">Support and payment</button>
+    </section>
+  </body>
+</html>

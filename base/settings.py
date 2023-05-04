@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,8 +19,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
+
+# Stripe configuration
+STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY_e')
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY_e')
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+%^gvv4uh@%5gh--1mh$3q^6f3(bok45rv=yru1@nl9y8d6yn+'
+SECRET_KEY = env('SECRET_KEY_e')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +39,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'pay',
+    'rest_framework',
+    'djoser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,20 +80,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'base.wsgi.application'
 
+LOGIN_REDIRECT_URL= '/'
+LOGOUT_REDIRECT_URL='/'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+DATABASES = {  
+    'default': {  
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': env('DATABASE_NAME_e'),  
+        'USER': env('DATABASE_USER_e'),  
+        'PASSWORD': env('DATABASE_PASS_e'),  
+        'HOST': env('DATABASE_HOST_e'),
+        'PORT': env('DATABASE_PORT_e'),  
+        'OPTIONS': {  
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
+        }  
+    }  
 }
 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = 'pay.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

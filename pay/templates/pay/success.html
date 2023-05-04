@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thanks for your order!</title>
+  <link rel="stylesheet" href="{% static 'pay/styles.css' %}">
+</head>
+<body>
+  <section>
+    {% if user %}
+        <div><a href ="{% url 'api:logout'  %}">logout {{user}}</a></div>
+    {% endif %}
+    {% if PaymentOK %}
+      <p>{{PaymentOK}}</p>
+      <p>Amount of money you paid:{{amount_total}}</p>
+    {% else %}
+      <p>{{PaymentNOK}}</p>
+    {% endif %}
+    <p>
+      We appreciate you! If you have any questions, please send an email.
+    </p>
+    <p><a href="mailto:hamidrezaerahimi67@gmail.com">hamidrezaerahimi67@gmail.com</a></p>
+  </section>
+</body>
+</html>

@@ -65,14 +65,17 @@ def success(request):
     status =session_info['status']
     payment_intent =session_info['payment_intent']
     if payment_status == "paid" and status=="complete":
-        Pid = Payments.objects.get(Transaction=sessionId)
-        Pid.Transaction = payment_intent
-        Pid.Status = True
-        Pid.save(update_fields=["Transaction", "Status"])
-        return render(request, "pay/success.html",{
-            "PaymentOK": "Payment Confirmed.",
-            "amount_total": amount_total
-        })
+        try:
+            Pid = Payments.objects.get(Transaction=sessionId)
+            Pid.Transaction = payment_intent
+            Pid.Status = True
+            Pid.save(update_fields=["Transaction", "Status"])
+            return render(request, "pay/success.html",{
+                "PaymentOK": "Payment Confirmed.",
+                "amount_total": amount_total
+            })
+        except Exception as e:
+            return JsonResponse({'error': str(e)})    
     else:
         return render(request, "pay/success.html",{
             "PaymentNOK": "Payment not confirmed!"

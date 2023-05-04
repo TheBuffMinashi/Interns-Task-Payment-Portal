@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,12 +19,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
+
 # Stripe configuration
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51MwpUsHQIdOmxz7tIr93shngIxXeQyTnTvNWSNTsDF7yeiWHmMZ1UzHOJZT9F55l7z25wQ8xFONLAsPL3hKaDGGY005bKy1aoH'
-STRIPE_SECRET_KEY = 'sk_test_51MwpUsHQIdOmxz7tmNoiQ0dyz6wG9xRBOeQNhhv3PNkkIk5qIVz92FLJXPxcqfF2YY6uoUXXgflaJcJZJI9LSA5M00s77BpHzW'
+STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY_e')
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY_e')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+%^gvv4uh@%5gh--1mh$3q^6f3(bok45rv=yru1@nl9y8d6yn+'
+SECRET_KEY = env('SECRET_KEY_e')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,11 +89,11 @@ LOGOUT_REDIRECT_URL='/'
 DATABASES = {  
     'default': {  
         'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'task1m_db',  
-        'USER': 'root',  
-        'PASSWORD': '',  
-        'HOST': 'localhost',  
-        'PORT': '3306',  
+        'NAME': env('DATABASE_NAME_e'),  
+        'USER': env('DATABASE_USER_e'),  
+        'PASSWORD': env('DATABASE_PASS_e'),  
+        'HOST': env('DATABASE_HOST_e'),
+        'PORT': env('DATABASE_PORT_e'),  
         'OPTIONS': {  
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
         }  

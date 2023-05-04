@@ -7,6 +7,9 @@
 </head>
 <body>
   <section>
+    {% if user %}
+        <div><a href ="{% url 'api:logout'  %}">logout {{user}}</a></div>
+    {% endif %}
     {% if PaymentOK %}
       <p>{{PaymentOK}}</p>
       <p>Amount of money you paid:{{amount_total}}</p>

@@ -11,8 +11,8 @@ class PaymentModelTest(TestCase):
         payment = Payments.objects.get(Transaction="test")
         self.assertEqual(payment.Amount, 1000)
     def test_tempate(self):
-        respo = self.client.get(reverse('index'))
-        self.assertTemplateUsed(respo,'pay/index.html')
+        respo = self.client.get(reverse('cancelled'))
+        self.assertTemplateUsed(respo,'pay/cancel.html')
 
 class PageUrlApi(TestCase):
     def setUp(self):
